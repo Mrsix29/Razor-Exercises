@@ -1,6 +1,9 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = string.Format("Razor - {0}", "Exercise 01");
+    Page.Title = string.Format("Razor - {0}", "Form With Textbox");
+    var myname = Request.Form["dataentry"];
+    var thebutton = Request.Form["theButton"];
+    //any other additional processing such as database access
 }
 
 @section banner {
