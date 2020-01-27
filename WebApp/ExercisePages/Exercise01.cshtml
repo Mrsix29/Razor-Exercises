@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = string.Format("Razor - {0}", "Form With Textbox");
+    Page.Title = string.Format("Exerciese{0}", "01:Basic form Processing");
     var myname = Request.Form["dataentry"];
     var thebutton = Request.Form["theButton"];
     //any other additional processing such as database access
@@ -41,25 +41,23 @@ else
 {
     // use to initialize items on your form BEFORE it is sent
     // to the user for the FIRST time.
-    <p>this is the first time on this page.</p>
+    <p></p>
 }
 
 
-<form id="theform" method="post">
-    <label id="label1" for="dataentry">Enter your full name</label>&nbsp;&nbsp;
+<form id="EX01" method="post">
+    <label id="label1" for="dataentry">Customer Name:</label>
+    <br />
     <input type="text" id="dataentry" name="dataentry"
            value="@myname" />
-    <br /><br />
+    <br />
+    <br />
     <div class="row">
         <div class="offset-1">
             <button type="submit" id="theButton" name="theButton"
-                    value="submit" class="btn btn-primary">
-                Submit
-            </button>&nbsp;&nbsp;
+                    value="submit" class="btn btn-primary">Submit</button>&nbsp;&nbsp;
             <button type="submit" id="theButton" name="theButton"
-                    value="reset" class="btn btn-light">
-                Reset
-            </button>
+                    value="reset" class="btn btn-light">Reset</button>
         </div>
     </div>
 </form>
