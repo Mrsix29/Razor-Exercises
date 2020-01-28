@@ -3,7 +3,7 @@
     Page.Title = string.Format("Exerciese{0}", "01:Basic form Processing");
     string choices = "";
     var myname = Request.Form["dataentry"];
-    
+
     var thebutton = Request.Form["theButton"];
     choices = Request.Form["MealGroup"];
     //any other additional processing such as database access
@@ -26,11 +26,31 @@
         //the Press Me button was pressed
         if (string.IsNullOrEmpty(myname))
         {
-            <p></p>
+            <p>Please enter your name</p>
         }
         else
         {
-            <p></p>
+            if (choices.IsEmpty())
+            {
+                <p>Please select the meal entries of your choice</p>
+                choices = "";
+            }
+            else
+            {
+                //for a checkbox list, your choices will be a set of strings
+                //   separated by a delimiter (in this case is a comma)
+                //to divide up this set of strings use the .Split(delimiter) method
+                //to process the collection of strings in choices, consider using foreach
+                <p>
+                    @myname, I see that you have the following meal entries:
+                    <ul>
+                        @foreach (var platform in choices.Split(','))
+                        {
+                            <li>@platform</li>
+                        }
+                    </ul>
+                </p>
+            }
         }
     }
     else
@@ -45,46 +65,6 @@ else
     // use to initialize items on your form BEFORE it is sent
     // to the user for the FIRST time.
     <p></p>
-}
-@if (IsPost)
-{
- 
-    //you can delay retreiving your data input until you actually have
-    //  a postback
-    if (thebutton.Equals("reset"))
-    {
-        <p>You pressed the Reset button.</p>
-        choices = "";
-    }
-    else
-    {
-        if (choices.IsEmpty())
-        {
-            <p >Please select the meal entries of your choice</p>
-            choices = "";
-        }
-        else
-        {
-            //for a checkbox list, your choices will be a set of strings
-            //   separated by a delimiter (in this case is a comma)
-            //to divide up this set of strings use the .Split(delimiter) method
-            //to process the collection of strings in choices, consider using foreach
-            <p>
-                @myname, I see that you have the following meal entries:
-                <ul>
-                    @foreach (var platform in choices.Split(','))
-                    {
-                        <li>@platform</li>
-                    }
-                </ul>
-            </p>
-        }
-    }
-}
-else
-{
-    <p></p>
-    choices = "";
 }
 
 <form id="EX01" method="post">
