@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/_Layout.cshtml";
-    Page.Title = string.Format("Razor - {0}", "Partial Name Query with SQL LIKE Page 1");
+    Page.Title = string.Format("Exerciese{0}", "Exercise02_A");
 
     //output variables
     string artistid = "";
@@ -74,7 +74,7 @@
             // separate data pairs with an  &
             // sample syntax    Response.Redirect(page.ext?lbl=value[&lbl=value ...])
             //WARNING: value are passed in plain text on Url
-            Response.Redirect("SimpleQueryLikePage2.cshtml?cid=" + artistarg);
+            Response.Redirect("Exercise02_B.cshtml?cid=" + artistarg);
 
         }
     }
