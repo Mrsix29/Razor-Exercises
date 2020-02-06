@@ -2,10 +2,11 @@
     Layout = "~/_Layout.cshtml";
     Page.Title = string.Format("Exerciese{0}", "02_B");
 
+
     var db = Database.Open("CHINOOK");
     var sqlquery = @"SELECT ArtistID, Name
-    FROM Artists
-    ORDER BY Name";
+FROM Artists
+ORDER BY Name";
     var catinfo = db.Query(sqlquery);
 }
 
@@ -26,13 +27,13 @@
     else
     {
         var prodquery = @"SELECT AlbumID
-    FROM Albums
-    WHERE ArtistID = @0";
+FROM Albums
+WHERE ArtistID = @0";
         var prodinfo = db.Query(prodquery, choice);
         //      check to see if there are products for category
         if (prodinfo.Count() == 0)
         {
-            <p style="color:firebrick">There are no products for the selected category.</p>
+            <p style="color:firebrick">There are no album for the selected artist.</p>
         }
         else
         {
@@ -56,7 +57,7 @@ else
     //the .Query() command will give you a collection of 0, 1 or more records
     if (catinfo.Count() == 0)
     {
-        <p style="color:firebrick">There are no artists on file.</p>
+        Response.Redirect("Exercise02_A.cshtml");
     }
 }
 
