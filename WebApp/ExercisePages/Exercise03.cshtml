@@ -6,7 +6,57 @@
 @Html.ValidationSummary()
     <form id="theForm" action="" method="post">
         <div class="row row-cols-2">
-            <label> </label>
+            @*Title*@
+            <div class="col text-right">
+                <label id="lbltitle" for="Title">Title:</label>
+            </div>
+            <div class="col text-left">
+                <input type="text" name="Title" value="@Title" />
+            </div><br />
+            @* Artist*@
+            <div class="col text-right">
+                <label id="lblArtistList" for="ArtistList">Artist:</label>
+            </div><br />
+            <div class="col text-left">
+                <select name="ArtistList">
+                    <option value="0">select...</option>
+                    @foreach (var acollectionrow in artistlist)
+                    {
+                        if (acollectionrow.ArtistList.ToString() == artistid)
+                        {
+                            <option value="@acollectionrow[0]" selected>@acollectionrow[1]</option>
+                        }
+                        else
+                        {
+                            <option value="@acollectionrow[0]" selected>@acollectionrow[1]</option>
+                        }
+                    }
+                </select>
+            </div><br />
+            @* Year *@
+            <div class="col text-right">
+                <label id="lblYear" for="Year">Year:</label>
+            </div>
+            <div class="col text-left">
+                <input type="number" name="Year" value="@year" step="1" />
+            </div><br />
+            @* Label *@
+            <div class="col text-right">
+                <label id="lblLabel" for="Lable">Label:</label>
+            </div>
+            <div class="col text-left">
+                <input type="text" name="Label" value="@label" />q
+            </div>
         </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <input type="submit" id="FormButton" name="FormButton" 
+                       class="btn btn-primary" value="Add"/>
+                <input type="submit" id="FormButton" name="FormButton" formnovalidate
+                       class="btn" value="Clear"/>
+            </div>
+
+        </div>
+
 
     </form>
