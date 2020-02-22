@@ -1,38 +1,38 @@
 ﻿@{
-    Page.Title = string.Format("Razor - {0}", "Exercise 03");
     Layout = "~/_Layout.cshtml";
+    Page.Title = string.Format("Razor - {0}", "Exercise 03");
 
     var title = "";
     var artistid = "0";
-    var year = "";
-    var label = "";
+    var releaseyear = "";
+    var releaselabel = "";
 
-    var db = Database.Open("Chinook");
-    var aritistquery = "SELECT ArtistId, Name "
-        + "From Artists "
-        + "Order by Name";
+    var db = Database.Open("CHINOOK");
+    var aritistquery = @"SELECT ArtistId, Name "
+        + "FROM Artists "
+        + "ORDER BY Name";
     var artistlist = db.Query(aritistquery);
 
     //validator control execute on the server side
     Validation.Add("Title",
         Validator.Required("Title is required"),
-        Validator.StringLength(160, 1, "Title is required"));
+        Validator.StringLength(160, 1, "Title is limited to 160 characters"));
 
     Validation.Add("ArtistId",
         Validator.Integer("ArtistId must be a number.")
         );
 
-    Validation.Add("Year",
+    Validation.Add("ReleaseYear",
         Validator.Required("ReleaseYear is required"),
         Validator.Range(1950, 2020, "Year is nout of range, 1950 to today")
         );
-    Validation.Add("Label",
-        Validator.StringLength(50, 1, "Label is limited to 50 characters")
+    Validation.Add("ReleaseLabel",
+        Validator.StringLength(50, 0, "Label is limited to 50 characters")
         );
 
 }
 @section head {
-
+    <link href="~/Content/MySpacing.css" rel="stylesheet" />
 }
 @section banner {
     <h1>@Page.Title</h1>
@@ -41,15 +41,15 @@
 {
     title = Request.Form["Title"];
     artistid = Request.Form["ArtistId"];
-    year = Request.Form["Year"];
-    label = Request.Form["Label"];
+    releaseyear = Request.Form["ReleaseYear"];
+    releaselabel = Request.Form["ReleaseLabel"];
     var thebutton = Request.Form["FormButton"];
     if (thebutton.Equals("Clear"))
     {
         title = "";
         artistid = "0";
-        year = "";
-        label = "";
+        releaseyear = "";
+        releaselabel = "";
     }
     else
     {
@@ -58,15 +58,16 @@
             try
             {
                 var inscommand = "INSERT INTO Albums "
-                    + "(Title, ArtistID, ReleaseYear, ReleaseLabel "
-                    + "VALUES(@0, @1, @2, @3, 0)";
-                db.Execute(inscommand, title,
+                    + "(Title, ArtistId, ReleaseYear, ReleaseLabel) "
+                    + "VALUES(@0, @1, @2, @3)";
+                db.Execute(inscommand, 
+                    string.IsNullOrEmpty(title) ? null : title,
                     artistid.Equals("0") ? null : artistid,                    
-                    string.IsNullOrEmpty(year) ? null : year,
-                    string.IsNullOrEmpty(label) ? null : label);
+                    releaseyear.Equals("0") ? null : releaseyear,
+                    string.IsNullOrEmpty(releaselabel) ? null : releaselabel);
                 <div class="col-12 text-center">
                     <p style="color:green">
-                        Product has been ADDED
+                        album has been ADDED
                     </p>
                 </div>
             }
@@ -82,24 +83,24 @@
     }
 }
 
-}
+
 
 @Html.ValidationSummary()
-<form id="theForm" action="" method="post">
+<form id="theForm" method="post">
     <div class="row row-cols-2">
         @*Title*@
         <div class="col text-right">
             <label id="lbltitle" for="Title">Title:</label>
         </div>
         <div class="col text-left">
-            <input type="text" name="Title" value="@title" />
+            <input type="text" id="Title" name="Title" value="@title" />
         </div><br />
         @* Artist*@
         <div class="col text-right">
             <label id="lblArtistList" for="ArtistList">Artist:</label>
         </div><br />
         <div class="col text-left">
-            <select name="ArtistList">
+            <select name="ArtistList" id="ArtistList">
                 <option value="0">select...</option>
                 @foreach (var acollectionrow in artistlist)
                 {
@@ -109,24 +110,24 @@
                     }
                     else
                     {
-                        <option value="@acollectionrow[0]" selected>@acollectionrow[1]</option>
+                        <option value="@acollectionrow[0]">@acollectionrow[1]</option>
                     }
                 }
             </select>
         </div><br />
         @* Year *@
         <div class="col text-right">
-            <label id="lblYear" for="Year">Year:</label>
+            <label id="lblYear" for="ReleaseYear">Year:</label>
         </div>
         <div class="col text-left">
-            <input type="number" name="Year" value="@year"  />
+            <input type="number" id="ReleaseYear" name="ReleaseYear" value="@releaseyear" />
         </div><br />
         @* Label *@
         <div class="col text-right">
-            <label id="lblLabel" for="Lable">Label:</label>
+            <label id="lblLabel" for="ReleaseLabel">Label:</label>
         </div>
         <div class="col text-left">
-            <input type="text" name="Label" value="@label" />q
+            <input type="text" id="ReleaseLabel" name="ReleaseLabel" value="@releaselabel" />
         </div>
     </div>
     <div class="row">
