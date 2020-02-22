@@ -40,7 +40,7 @@
 @if (IsPost)
 {
     title = Request.Form["Title"];
-    artistid = Request.Form["ArtistId"];
+    artistid = Request.Form["ArtistList"];
     releaseyear = Request.Form["ReleaseYear"];
     releaselabel = Request.Form["ReleaseLabel"];
     var thebutton = Request.Form["FormButton"];
@@ -57,10 +57,9 @@
         {
             try
             {
-                var inscommand = "INSERT INTO Albums "
-                    + "(Title, ArtistId, ReleaseYear, ReleaseLabel) "
-                    + "VALUES(@0, @1, @2, @3)";
-                db.Execute(inscommand, 
+                var inscommand = "INSERT INTO Albums (Title, ArtistId, ReleaseYear, ReleaseLabel) VALUES (@0, @1, @2, @3)";
+
+                db.Execute(inscommand,
                     string.IsNullOrEmpty(title) ? null : title,
                     artistid.Equals("0") ? null : artistid,                    
                     releaseyear.Equals("0") ? null : releaseyear,
