@@ -4,8 +4,8 @@
 
     var title = "";
     var artistid = "0";
-    var releaseyear = "";
-    var releaselabel = "";
+    var year = "";
+    var label = "";
 
     var db = Database.Open("CHINOOK");
     var aritistquery = @"SELECT ArtistId, Name "
@@ -41,15 +41,15 @@
 {
     title = Request.Form["Title"];
     artistid = Request.Form["ArtistList"];
-    releaseyear = Request.Form["ReleaseYear"];
-    releaselabel = Request.Form["ReleaseLabel"];
+    year = Request.Form["ReleaseYear"];
+    label = Request.Form["ReleaseLabel"];
     var thebutton = Request.Form["FormButton"];
     if (thebutton.Equals("Clear"))
     {
         title = "";
         artistid = "0";
-        releaseyear = "";
-        releaselabel = "";
+        year = "";
+        label = "";
     }
     else
     {
@@ -62,8 +62,8 @@
                 db.Execute(inscommand,
                     string.IsNullOrEmpty(title) ? null : title,
                     artistid.Equals("0") ? null : artistid,                    
-                    releaseyear.Equals("0") ? null : releaseyear,
-                    string.IsNullOrEmpty(releaselabel) ? null : releaselabel);
+                    year.Equals("0") ? null : year,
+                    string.IsNullOrEmpty(label) ? null : label);
                 <div class="col-12 text-center">
                     <p style="color:green">
                         album has been ADDED
@@ -119,14 +119,14 @@
             <label id="lblYear" for="ReleaseYear">Year:</label>
         </div>
         <div class="col text-left">
-            <input type="number" id="ReleaseYear" name="ReleaseYear" value="@releaseyear" />
+            <input type="number" id="ReleaseYear" name="ReleaseYear" value="@year" />
         </div><br />
         @* Label *@
         <div class="col text-right">
             <label id="lblLabel" for="ReleaseLabel">Label:</label>
         </div>
         <div class="col text-left">
-            <input type="text" id="ReleaseLabel" name="ReleaseLabel" value="@releaselabel" />
+            <input type="text" id="ReleaseLabel" name="ReleaseLabel" value="@label" />
         </div>
     </div>
     <div class="row">
